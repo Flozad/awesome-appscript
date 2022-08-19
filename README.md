@@ -1,7 +1,5 @@
 # Google-Sheets-Functions
 
-InboxScraper
+This is my personal Database for Google Appscript Funcitons I have used. 
 
-https://clasicwebtools.com/
-
-You can find the steps to follow in my website https://clasicwebtools.com/articulos/programacion/inbox-scraper.html
+Feel free to copy and paste them as I do every day :)
