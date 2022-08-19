@@ -4,6 +4,7 @@
 // 3 - Indicate what column is going to pick values. It is set 
 //     for A2:A in Labels var
 
+// Uses the value of the spreadsheet cells as the dynamic values inside a forms dropdown options
 var ssID = "SpreadSHEETSID";
 var formID = "FORMSID";
 
