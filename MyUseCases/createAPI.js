@@ -1,10 +1,13 @@
 // Script from: https://www.youtube.com/watch?v=3OakodfKjrU
+// The function doGet() is used to retrieve data from a Google Sheet.
 
-function doGet (request) {
+function doGet(request) {
   var query = request.parameter.q; // If you want to search for specific data, append ?q=my-string-to-search-for
   var parameters = 2; // The number of columns in your spreadsheet.
   var sheetname = 'Sheet1'; // TODO: Change this to the name of the sheet you want to target.
-  var doc = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('key')); // NOTE: 'key' must be the same up here as it is down below in setup();
+  var doc = SpreadsheetApp.openById(
+    PropertiesService.getScriptProperties().getProperty('key')
+  ); // NOTE: 'key' must be the same up here as it is down below in setup();
   var sheet = doc.getSheetByName(sheetname);
   var lastrow = sheet.getLastRow();
   var rows = []; // The array we're going to push our data to.
@@ -23,15 +26,19 @@ function doGet (request) {
 
   // If there's a query, return the appropriate result
   if (query != null) {
-    var rowstoreturn = rows.filter(a => a[0] == query);
-    return ContentService.createTextOutput(JSON.stringify({ "data": rowstoreturn, "error": false })).setMimeType(ContentService.MimeType.JSON);
+    var rowstoreturn = rows.filter((a) => a[0] == query);
+    return ContentService.createTextOutput(
+      JSON.stringify({ data: rowstoreturn, error: false })
+    ).setMimeType(ContentService.MimeType.JSON);
   }
 
   // Otherwise, return all the data
-  return ContentService.createTextOutput(JSON.stringify({ "data": rows, "error": false })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(
+    JSON.stringify({ data: rows, error: false })
+  ).setMimeType(ContentService.MimeType.JSON);
 }
 
-function setup () {
+function setup() {
   var doc = SpreadsheetApp.getActiveSpreadsheet();
   PropertiesService.getScriptProperties().setProperty('key', doc.getId());
 }
