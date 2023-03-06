@@ -34,3 +34,5 @@ Awesome Apps Script is an open source project aimed at providing a comprehensive
 If i continue getting some cool stars, I'll probably end up structuring with links and resources.
 
 Feel free to copy and paste them as I do every day :)
+
+who am I? https://clasicwebtools.com/me
