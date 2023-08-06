@@ -3,5 +3,5 @@
 function clearCell() {
   var ss = SpreadsheetApp.getActive();
   const sh = ss.getSheets()[0];
-  sh.getRange('B2:B').clearContent();
+  sh.getRange('B2:B').clearContent(); // Range of cleaning is B2:B
 }
