@@ -1,0 +1,106 @@
+function exportAnalyticsData() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var variablesSheet = spreadsheet.getSheetByName('Variables in Script');
+  var viewId = variablesSheet.getRange('B1').getValue();
+
+  var detailSheet = spreadsheet.getSheetByName('Detail Breakdown') || spreadsheet.insertSheet('Detail Breakdown');
+  var totalSheet = spreadsheet.getSheetByName('Total Summary') || spreadsheet.insertSheet('Total Summary');
+  detailSheet.clear();
+  totalSheet.clear();
+
+  var startDate = '2015-01-01';
+  var endDate = 'yesterday';
+
+  var analyticsData = Analytics.Data.Ga.get(
+    'ga:' + viewId,
+    startDate,
+    endDate,
+    'ga:sessions,ga:pageviews,ga:users,ga:bounceRate,ga:avgSessionDuration',
+    {
+      'dimensions': 'ga:date,ga:sourceMedium',
+    }
+  );
+
+  var rows = analyticsData.rows;
+  if (rows) {
+    detailSheet.appendRow(['Date', 'Source/Medium', 'Sessions', 'Pageviews', 'Users', 'Bounce Rate', 'Avg. Session Duration']);
+    
+    var groupedData = {};
+
+    rows.forEach(function(row) {
+      var date = row[0];
+      var formattedDate = date.substring(0, 4) + '-' + date.substring(4, 6) + '-' + date.substring(6, 8);
+      row[0] = formattedDate;
+
+      detailSheet.appendRow(row);
+
+      if (!groupedData[formattedDate]) {
+        groupedData[formattedDate] = {
+          sessions: 0,
+          pageviews: 0,
+          users: 0,
+          bounceRateSum: 0,
+          avgSessionDurationSum: 0,
+          count: 0
+        };
+      }
+
+      groupedData[formattedDate].sessions += parseInt(row[2]);
+      groupedData[formattedDate].pageviews += parseInt(row[3]);
+      groupedData[formattedDate].users += parseInt(row[4]);
+      groupedData[formattedDate].bounceRateSum += parseFloat(row[5]);
+      groupedData[formattedDate].avgSessionDurationSum += parseFloat(row[6]);
+      groupedData[formattedDate].count += 1;
+    });
+
+    totalSheet.appendRow(['Date', 'Total Sessions', 'Total Pageviews', 'Total Users', 'Average Bounce Rate', 'Average Session Duration']);
+
+    for (var date in groupedData) {
+      var data = groupedData[date];
+      var avgBounceRate = data.bounceRateSum / data.count;
+      var avgSessionDuration = data.avgSessionDurationSum / data.count;
+      totalSheet.appendRow([date, data.sessions, data.pageviews, data.users, avgBounceRate, avgSessionDuration]);
+    }
+  } else {
+    Logger.log('No data found');
+  }
+}
+
+function exportLandingPageData() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var variablesSheet = spreadsheet.getSheetByName('Variables in Script');
+  var viewId = variablesSheet.getRange('B1').getValue();
+
+  var landingPageSheet = spreadsheet.getSheetByName('Landing Pages Breakdown') || spreadsheet.insertSheet('Landing Pages Breakdown');
+  landingPageSheet.clear();
+
+  var startDate = '2015-01-01';
+  var endDate = 'yesterday';
+
+  var analyticsData = Analytics.Data.Ga.get(
+    'ga:' + viewId,
+    startDate,
+    endDate,
+    'ga:sessions,ga:pageviews,ga:users,ga:bounceRate,ga:avgSessionDuration',
+    {
+      'dimensions': 'ga:landingPagePath,ga:date',
+      'sort': '-ga:sessions',
+      'max-results': 10000
+    }
+  );
+
+  var rows = analyticsData.rows;
+  if (rows) {
+    landingPageSheet.appendRow(['Landing Page Path', 'Date', 'Sessions', 'Pageviews', 'Users', 'Bounce Rate', 'Avg. Session Duration']);
+    
+    rows.forEach(function(row) {
+      var date = row[1];
+      var formattedDate = date.substring(0, 4) + '-' + date.substring(4, 6) + '-' + date.substring(6, 8);
+      row[1] = formattedDate;
+
+      landingPageSheet.appendRow(row);
+    });
+  } else {
+    Logger.log('No data found');
+  }
+}
