@@ -139,6 +139,7 @@ A curated list of resources for Google Apps Script, a scripting language based o
 
 - [google-docs-add-on](https://github.com/Automattic/google-docs-add-on) Publish to WordPress from Google Docs
 - [email-studio-gmail-addon](https://github.com/labnol/email-studio-gmail-addon) Gmail add-on for Mail Merge and Email Scheduler
+- [CiteMe](https://citeme.app) Google Docs add-on that searches 11+ academic databases and formats citations in 40+ styles
 
 #### (Additional links from your list will also be included here)
 
