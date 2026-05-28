@@ -140,6 +140,7 @@ A curated list of resources for Google Apps Script, a scripting language based o
 - [google-docs-add-on](https://github.com/Automattic/google-docs-add-on) Publish to WordPress from Google Docs
 - [email-studio-gmail-addon](https://github.com/labnol/email-studio-gmail-addon) Gmail add-on for Mail Merge and Email Scheduler
 
+- [Form Handler for Google Sheets](https://github.com/ttcd77/form-handler) - Production-ready Google Apps Script for contact forms with email notifications, spam protection, and auto-responder. MIT licensed.
 #### (Additional links from your list will also be included here)
 
 ## 5. Testing
