@@ -159,6 +159,7 @@ A curated list of resources for Google Apps Script, a scripting language based o
 #### (Additional links from your list will also be included here)
 
 ## 7. Snippets and Assorted
+- [google-maps-100-stops](https://github.com/b4thefomo/google-maps-100-stops) Custom function building one Google Maps URL for up to 100 stops, plus the reproducible limit research
 ### A mixture of useful code snippets and assorted resources for Google Apps Script developers.
 
 ### 7.1. Snippets
